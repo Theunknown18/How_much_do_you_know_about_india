@@ -17,7 +17,7 @@ list_of_states=data.state.values.tolist()
 life=10
 cnt=0
 guessed_states=[]
-while len(guessed_states) < 36:
+while len(guessed_states) <= 36:
     answer_state=screen.textinput(title=f"{cnt}/{len(list_of_states)} States/Ut",prompt="Enter the name of State/Ut ").title()
     if answer_state in list_of_states:
         cnt+=1
