@@ -14,10 +14,10 @@ turtle.shape("India.gif")
 data=pandas.read_csv('states_and_ut.csv')
 list_of_states=[]
 list_of_states=data.state.values.tolist()
-game_is_on=True
 life=10
 cnt=0
-while game_is_on:
+guessed_states=[]
+while len(guessed_states) < 36:
     answer_state=screen.textinput(title=f"{cnt}/{len(list_of_states)} States/Ut",prompt="Enter the name of State/Ut ").title()
     if answer_state in list_of_states:
         cnt+=1
@@ -29,8 +29,8 @@ while game_is_on:
         nw.hideturtle()
         nw.goto(xcor,ycor)
         nw.write(answer_state)
-    else:
-        life-=1
+        guessed_states.append(answer_state)
+
     if cnt==36:
         turtle.color("Blue")
         turtle.goto(0, 0)
@@ -40,4 +40,14 @@ while game_is_on:
         turtle.goto(0,0)
         turtle.write("Game Over,You Lost",align="Center",font=FONT)
         game_is_on=False
+    if answer_state == "Exit":
+        missing_states=[]
+        for state in list_of_states:
+            if state not in guessed_states:
+                missing_states.append(state)
+            new_data=pandas.DataFrame(missing_states)
+            new_data.to_csv("States_you_missed.csv")
+        exit(0)
+    else:
+        life-=1
 screen.exitonclick()
